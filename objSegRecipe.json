@@ -1,0 +1,55 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "community.greengrass.objSeg",
+  "ComponentVersion": "1.0.0",
+  "ComponentDescription": "Object detection & segmentation in an AWS IoT Greengrass component.",
+  "ComponentPublisher": "Jennifer Lin",
+  "ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "Message": "world",
+      "accessControl": {
+        "aws.greengrass.ipc.mqttproxy": {
+          "com.example.MyIoTCorePubSubComponent:mqttproxy:1": {
+            "policyDescription": "Allows access to publish/subscribe to all topics.",
+            "operations": [
+              "aws.greengrass#PublishToIoTCore",
+              "aws.greengrass#SubscribeToIoTCore"
+            ],
+            "resources": [
+              "*"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Manifests": [
+    {
+      "Platform": {
+        "os": "linux"
+      },
+      "Lifecycle": {
+        "Run": {
+          "Script":"export DISPLAY=:0.0\necho $DISPLAY\npip install -r {artifacts:path}/requirements.txt\n python3 -u {artifacts:path}/webcam_instance_segmentation.py --model={artifacts:path}/yolov8n-seg.onnx"
+        }
+      },
+      "Artifacts": [
+        {
+          "URI": "s3://gg-cam-obj/seg-obj/webcam_instance_segmentation.py"
+        },
+        {
+          "URI": "s3://gg-cam-obj/seg-obj/yolov8n-seg.onnx"
+        },
+        {
+          "URI": "s3://gg-cam-obj/seg-obj/YOLOSeg.py"
+        },
+        {
+          "URI": "s3://gg-cam-obj/seg-obj/utils.py"
+        },
+        {
+          "URI": "s3://gg-cam-obj/seg-obj/requirements.txt"
+        }
+      ]
+    }
+  ]
+}

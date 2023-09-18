@@ -1,0 +1,22 @@
+{
+    "targetArn": "arn:aws:iot:<aws_region>:<aws_account_id>:thinggroup/<thing_group>",
+    "deploymentName": "<deployment_name",
+    "components": {
+        "community.greengrass.objSeg": {
+            "componentVersion": "1.0.0",
+            "runWith": {
+                "posixUser": "1000:1000"
+            }
+        }
+    },
+    "deploymentPolicies": {
+        "failureHandlingPolicy": "DO_NOTHING",
+        "componentUpdatePolicy": {
+            "timeoutInSeconds": 60,
+            "action": "NOTIFY_COMPONENTS"
+        },
+        "configurationValidationPolicy": {
+            "timeoutInSeconds": 60
+        }
+    }
+}
